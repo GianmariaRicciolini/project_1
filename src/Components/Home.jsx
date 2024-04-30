@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import { baseApiUrl } from "../constants";
+import { baseApiUrl, authString } from "../constants";
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -37,7 +37,6 @@ const Home = () => {
   }
 
   const deletePost = (postId) => {
-    const authString = btoa("GianMariaRicciolini: 8mT4 MAip fZ4h 7ytW BLO5 vzZs");
     fetch(`${baseApiUrl}/posts/${postId}`, {
       headers: {
         Authorization: `Basic ${authString}`,

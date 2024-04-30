@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Container, Col } from "react-bootstrap";
-import { baseApiUrl } from "../constants";
+import { Form, Container, Col } from "react-bootstrap";
+import { baseApiUrl, authString } from "../constants";
 import { useParams } from "react-router-dom/dist";
-import { Link } from "react-router-dom";
 
 const ChangesForm = () => {
-  const authString = btoa("GianMariaRicciolini: 8mT4 MAip fZ4h 7ytW BLO5 vzZs");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");

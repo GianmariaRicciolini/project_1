@@ -5,6 +5,7 @@ import NavWp from "./Components/NavWp";
 import Details from "./Components/Details";
 import ChangesForm from "./Components/ChangesForm";
 import "./App.css";
+import CreatePost from "./Components/CreatePost";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/post/:id" element={<Details />} />
         <Route path="/changes/:id" element={<ChangesForm />} />
+        <Route path="/create-post" element={<CreatePost />} />
       </Routes>
     </BrowserRouter>
   );
