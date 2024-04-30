@@ -55,6 +55,26 @@ const Home = () => {
       });
   };
 
+  const modifyPost = (postId) => {
+    const authString = btoa("GianMariaRicciolini: 8mT4 MAip fZ4h 7ytW BLO5 vzZs");
+    fetch(`${baseApiUrl}/posts/${postId}`, {
+      headers: {
+        Authorization: `Basic ${authString}`,
+      },
+      method: "PUT",
+    })
+      .then((res) => {
+        if (res.ok) {
+          setChanges(changes + 1);
+        } else {
+          console.error("Errore durante la modifica dell'articolo:", res.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error("Errore durante la richiesta di modifica:", error);
+      });
+  };
+
   return (
     <>
       <Container>
