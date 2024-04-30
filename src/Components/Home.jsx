@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { baseApiUrl } from "../constants";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -55,26 +56,6 @@ const Home = () => {
       });
   };
 
-  const modifyPost = (postId) => {
-    const authString = btoa("GianMariaRicciolini: 8mT4 MAip fZ4h 7ytW BLO5 vzZs");
-    fetch(`${baseApiUrl}/posts/${postId}`, {
-      headers: {
-        Authorization: `Basic ${authString}`,
-      },
-      method: "PUT",
-    })
-      .then((res) => {
-        if (res.ok) {
-          setChanges(changes + 1);
-        } else {
-          console.error("Errore durante la modifica dell'articolo:", res.statusText);
-        }
-      })
-      .catch((error) => {
-        console.error("Errore durante la richiesta di modifica:", error);
-      });
-  };
-
   return (
     <>
       <Container>
@@ -89,14 +70,25 @@ const Home = () => {
                     <Card.Img
                       src={post._embedded["wp:featuredmedia"][0].source_url}
                       alt="Featured Image"
-                      className="img-fluid"
+                      className="img-fluid py-3"
                     />
                   )}
+                  <Row>
+                    <Col xs={8}>
+                      <Link to={`/post/${post.id}`}>
+                        <button className="btn btn-success w-50">Read more...</button>
+                      </Link>
+                    </Col>
+                    <Col xs={4}>
+                      <Link to={`/changes/${post.id}`}>
+                        <button className="btn btn-warning w-50">Modify</button>
+                      </Link>
+                      <button className="btn btn-danger w-50" onClick={() => deletePost(post.id)}>
+                        Delete
+                      </button>
+                    </Col>
+                  </Row>
                 </Card.Body>
-
-                <button className="btn btn-danger" onClick={() => deletePost(post.id)}>
-                  Delete
-                </button>
               </Card>
             </Col>
           ))}
