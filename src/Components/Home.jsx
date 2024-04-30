@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { baseApiUrl, authString } from "../constants";
 import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -25,17 +26,6 @@ const Home = () => {
     setCurrentPage(page);
   };
 
-  function generatePaginationArray() {
-    let paginationArr = [];
-    for (let index = 1; index <= lastPage; index++) {
-      paginationArr.push({
-        n: index,
-        active: currentPage === index,
-      });
-    }
-    return paginationArr;
-  }
-
   const deletePost = (postId) => {
     fetch(`${baseApiUrl}/posts/${postId}`, {
       headers: {
@@ -57,38 +47,7 @@ const Home = () => {
 
   return (
     <>
-      <nav className="d-flex justify-content-center">
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-            <span
-              className="page-link text-success btn"
-              onClick={() => currentPage !== 1 && changePage(currentPage - 1)}
-            >
-              Previous
-            </span>
-          </li>
-
-          {generatePaginationArray().map((page) => (
-            <li key={page.n} className={`page-item ${page.active && "active"}`}>
-              <span
-                className={`page-link text-success btn ${page.active ? "bg-success text-white border-white" : ""}`}
-                onClick={() => changePage(page.n)}
-              >
-                {page.n}
-              </span>
-            </li>
-          ))}
-
-          <li className={`page-item ${currentPage === "lastPage" && "disabled"}`}>
-            <span
-              className="page-link text-success btn"
-              onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}
-            >
-              Next
-            </span>
-          </li>
-        </ul>
-      </nav>
+      <Pagination currentPage={currentPage} lastPage={lastPage} changePage={changePage} />
 
       <Container>
         <Row>
@@ -97,7 +56,6 @@ const Home = () => {
               <Card className="mb-3 background">
                 <Card.Body>
                   <Card.Title dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                  {/* Accedi all'URL dell'immagine dall'elemento media */}
                   <div className="overflow-hidden py-3 mb-3" style={{ height: "300px" }}>
                     {post._embedded && post._embedded["wp:featuredmedia"] && (
                       <Card.Img src={post._embedded["wp:featuredmedia"][0].source_url} alt="Featured Image" />
@@ -125,38 +83,7 @@ const Home = () => {
         </Row>
       </Container>
 
-      <nav className="d-flex justify-content-center">
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-            <span
-              className="page-link text-success btn"
-              onClick={() => currentPage !== 1 && changePage(currentPage - 1)}
-            >
-              Previous
-            </span>
-          </li>
-
-          {generatePaginationArray().map((page) => (
-            <li key={page.n} className={`page-item ${page.active && "active"}`}>
-              <span
-                className={`page-link text-success btn ${page.active ? "bg-success text-white border-white" : ""}`}
-                onClick={() => changePage(page.n)}
-              >
-                {page.n}
-              </span>
-            </li>
-          ))}
-
-          <li className={`page-item ${currentPage === "lastPage" && "disabled"}`}>
-            <span
-              className="page-link text-success btn"
-              onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}
-            >
-              Next
-            </span>
-          </li>
-        </ul>
-      </nav>
+      <Pagination currentPage={currentPage} lastPage={lastPage} changePage={changePage} />
     </>
   );
 };
