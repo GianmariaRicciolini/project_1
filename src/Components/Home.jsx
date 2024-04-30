@@ -95,7 +95,7 @@ const Home = () => {
         <Row>
           {posts.map((post) => (
             <Col key={post.id} md={6}>
-              <Card className="mb-3">
+              <Card className="mb-3 background">
                 <Card.Body>
                   <Card.Title dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
                   {/* Accedi all'URL dell'immagine dall'elemento media */}
@@ -107,14 +107,14 @@ const Home = () => {
                   <Row>
                     <Col xs={8}>
                       <Link to={`/post/${post.id}`}>
-                        <button className="btn btn-success w-50">Read more...</button>
+                        <button className="btn btn-outline-success w-50">Read more...</button>
                       </Link>
                     </Col>
                     <Col xs={4}>
                       <Link to={`/changes/${post.id}`}>
-                        <button className="btn btn-warning w-50">Modify</button>
+                        <button className="btn btn-outline-warning w-50">Modify</button>
                       </Link>
-                      <button className="btn btn-danger w-50" onClick={() => deletePost(post.id)}>
+                      <button className="btn btn-outline-danger w-50" onClick={() => deletePost(post.id)}>
                         Delete
                       </button>
                     </Col>
