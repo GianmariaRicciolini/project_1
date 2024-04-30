@@ -58,6 +58,39 @@ const Home = () => {
 
   return (
     <>
+      <nav className="d-flex justify-content-center">
+        <ul className="pagination">
+          <li className={`page-item ${currentPage === 1 && "disabled"}`}>
+            <span
+              className="page-link text-success btn"
+              onClick={() => currentPage !== 1 && changePage(currentPage - 1)}
+            >
+              Previous
+            </span>
+          </li>
+
+          {generatePaginationArray().map((page) => (
+            <li key={page.n} className={`page-item ${page.active && "active"}`}>
+              <span
+                className={`page-link text-success btn ${page.active ? "bg-success text-white border-white" : ""}`}
+                onClick={() => changePage(page.n)}
+              >
+                {page.n}
+              </span>
+            </li>
+          ))}
+
+          <li className={`page-item ${currentPage === "lastPage" && "disabled"}`}>
+            <span
+              className="page-link text-success btn"
+              onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}
+            >
+              Next
+            </span>
+          </li>
+        </ul>
+      </nav>
+
       <Container>
         <Row>
           {posts.map((post) => (
@@ -66,13 +99,11 @@ const Home = () => {
                 <Card.Body>
                   <Card.Title dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
                   {/* Accedi all'URL dell'immagine dall'elemento media */}
-                  {post._embedded && post._embedded["wp:featuredmedia"] && (
-                    <Card.Img
-                      src={post._embedded["wp:featuredmedia"][0].source_url}
-                      alt="Featured Image"
-                      className="img-fluid py-3"
-                    />
-                  )}
+                  <div className="overflow-hidden py-3 mb-3" style={{ height: "300px" }}>
+                    {post._embedded && post._embedded["wp:featuredmedia"] && (
+                      <Card.Img src={post._embedded["wp:featuredmedia"][0].source_url} alt="Featured Image" />
+                    )}
+                  </div>
                   <Row>
                     <Col xs={8}>
                       <Link to={`/post/${post.id}`}>
@@ -95,24 +126,33 @@ const Home = () => {
         </Row>
       </Container>
 
-      <nav>
+      <nav className="d-flex justify-content-center">
         <ul className="pagination">
           <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-            <span className="page-link" onClick={() => currentPage !== 1 && changePage(currentPage - 1)}>
+            <span
+              className="page-link text-success btn"
+              onClick={() => currentPage !== 1 && changePage(currentPage - 1)}
+            >
               Previous
             </span>
           </li>
 
           {generatePaginationArray().map((page) => (
             <li key={page.n} className={`page-item ${page.active && "active"}`}>
-              <span className="page-link" onClick={() => changePage(page.n)}>
+              <span
+                className={`page-link text-success btn ${page.active ? "bg-success text-white border-white" : ""}`}
+                onClick={() => changePage(page.n)}
+              >
                 {page.n}
               </span>
             </li>
           ))}
 
           <li className={`page-item ${currentPage === "lastPage" && "disabled"}`}>
-            <span className="page-link" onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}>
+            <span
+              className="page-link text-success btn"
+              onClick={() => currentPage !== lastPage && changePage(currentPage + 1)}
+            >
               Next
             </span>
           </li>
